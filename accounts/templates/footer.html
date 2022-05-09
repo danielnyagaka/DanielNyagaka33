@@ -1,0 +1,87 @@
+{% load static %}
+
+<script>
+  let a;
+  let date;
+  let time;
+  const options= { weekday : 'long', year : 'numeric',month : 'long', day : 'numeric'};
+  setInterval(() => {
+  a =new Date();
+
+  
+  date = a.toLocaleDateString(undefined,options);
+  time = a.getHours()+':'+a.getMinutes()+':'+a.getSeconds();
+  document.getElementById('time').innerHTML = time+ '<br>'+ date;
+}, 113);
+</script> 
+  <footer class="container py-5">
+    <div class="row">
+      
+      <div class="col-12 col-md">
+        <img src="{% static 'a2.jpeg' %}"  class="d-block w-100">
+        <small class="d-block mb-3 text-muted">&copy; 2017–2021</small>
+       <a href="#" ><i class="fab fa-facebook fa-lg" style="color: blue; background-color: white;"></i></a>
+       <a href="#" ><i class="fab fa-instagram fa-lg" style="color: brown; background-color: cornsilk;"></i></a>
+       <a href="#" ><i class="fab fa-twitter fa-lg" style="color: darkcyan;"></i></a>
+       <a href="#" ><i class="fab fa-telegram fa-lg" style="color: blue;"></i></a>
+       <a href="#" ><i class="fab fa-linkedin fa-lg" style="color: blue; background-color: white;"></i></a>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Features</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="#">Cool stuff</a></li>
+          <li><a class="link-secondary" href="#">Random feature</a></li>
+          <li><a class="link-secondary" href="#">Team feature</a></li>
+          <li><a class="link-secondary" href="#">Stuff for developers</a></li>
+          <li><a class="link-secondary" href="#">Team feature</a></li>
+          <li><a class="link-secondary" href="#">Stuff for developers</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Resource</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="#">Resource name</a></li>
+          <li><a class="link-secondary" href="#">Resource</a></li>
+          <li><a class="link-secondary" href="#">Another resource</a></li>
+          <li><a class="link-secondary" href="#">Final resource</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+          
+          <li><canvas id="canvas" width="150" height="150" style="background-color:#5a9cb6">
+          </canvas></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>About</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="#">Team</a></li>
+          
+         </ul>
+      </div>
+    </div>
+    
+  </div>
+    
+  </footer>
+
+
+
+<footer>
+  <div class="footer">
+    <div class="container">
+      
+     
+        <div align="center" class="col-md-3 footer_grid1">
+        
+
+
+
+         
+         
+         </div>
+    </div>
+  </div>
+</footer>

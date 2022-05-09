@@ -1,0 +1,84 @@
+{% load static %}
+<style>
+   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+        
+        
+</style>
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Smart Solutions</a>        
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'shop:allProdCat' %}">Home</a>
+              </li>
+              
+              <li class="nav-item">
+                <button type="button" class="btn btn-outline-info dropdown-toggle my-1 mx-2" data-bs-toggle="dropdown" id="dropdownMenuButton2" data-bs-display="static" aria-expanded="false">
+                  Category
+                </button>
+                 <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+                  {% for cat in links %}
+                  
+                  <li><a href="{{ cat.get_url }}"><button class="dropdown-item" type="button">{{cat.name}}</button></a> </li>
+                  {% endfor %}
+                  
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'contact' %}">ContactUs</a>
+              </li>
+              
+      
+            </ul>
+          </div>
+        </div>
+        
+        <form class="d-flex" action="{% url 'search_app:searchResult' %}" method="get">
+          {% csrf_token %}
+          <input class="form-control  my-1" type="search" placeholder="Search for products, brands and more" aria-label="Search" name="q">
+          <button class="btn btn-outline-info my-1 mx-1" type="submit">Search</button>
+        </form>
+  
+  
+    {% if request.user.is_authenticated and request.user.username %}
+    <button type="button" class="btn btn-outline-info dropdown-toggle my-1 mx-2" id="accountname" name="accountname" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+        {{request.user.username}}
+    </button>
+    <ul class="dropdown-menu dropdown-menu dropdown-menu-end">
+      
+      <li><a href="{% url 'wish:wish_detail' %}"><button class="dropdown-item" type="button">Wishlist  <i class="far fa-heart"></i></button></a></li>
+      <li><a href="{% url 'cart:cart_detail' %}"><button class="dropdown-item" type="button">My Cart   <i class="fas fa-shopping-cart"></i></button></a></li>
+      <li><a href="{% url 'order:order_history' %}"><button class="dropdown-item" type="button">My Orders  <i class="fas fa-shipping-fast"></i></button></a></li>
+      <li><a href="{% url 'forget_password' %}"><button class="dropdown-item" type="button">Password Reset  <i class="fas fa-user-alt"></i></button></a></li>
+      <li><a href="{% url 'signout' %}"><button class="dropdown-item" type="button">Logout  <i class="fas fa-sign-out-alt"></i></button></a></li>
+      
+      
+      
+    </ul>
+    {% else %}
+    <button type="button" class="btn btn-outline-info dropdown-toggle my-1 mx-2" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+      Guest
+     </button>
+     <ul class="dropdown-menu dropdown-menu dropdown-menu-end">
+      <li><a href="{% url 'login_attempt' %}"><button class="dropdown-item" type="button">Login</button></a></li>
+      <li><a href="{% url 'register_attempt' %}"><button class="dropdown-item" type="button">Sign Up</button></a></li>
+      
+    </ul>
+    {% endif %}
+
+  
+  </nav>
+      
+        
+</header>
+<br>
+<br>
+<br>

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block metadescription %}
+	{{ product.description | truncatewords:155 }}
+{% endblock %}
+
+{% block title %}
+	{{ product.name }} - Smart Solutions Private Limited
+{% endblock %}
+
+{% block content %}
+
+
+	<div class="row my_prod_row_class">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+			  <li class="breadcrumb-item my_title" aria-current="page"><a href="{% url 'shop:allProdCat' %}">Home</a></li>
+			  <li class="breadcrumb-item my_title" aria-current="page"><a href="{{ product.category.get_url }}">{{product.category}} </a></li>
+			  <li class="breadcrumb-item active my_title" aria-current="page" >{{product.name}}</a></li>
+			</ol>
+		  </nav>
+	
+	
+		<div class="container">
+			
+			<div class="row">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+					<div style="min-width: 18rem">
+						
+						
+						<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+							<div class="carousel-inner">
+							  <div class="carousel-item active">
+								<img src="{{product.image.url}}" height="400px" width="250" alt="{{ product.name }}" class="d-block w-100" >
+							  </div>
+							  <div class="carousel-item">
+								<img src="{{product.image1.url}}" height="400px" width="250" alt="{{ product.name }}" class="d-block w-100">
+							  </div>
+							  <div class="carousel-item">
+								<img src="{{product.image2.url}}" height="400px" alt="{{ product.name }}" class="d-block w-100">
+							  </div>
+							  <div class="carousel-item">
+								<img src="{{product.image3.url}}" height="400px" alt="{{ product.name }}" class="d-block w-100">
+							  </div>
+							</div>
+							
+							<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+							  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							  <!-- <span class="visually-hidden">Previous</span> -->
+							</a>
+							<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+							  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							  <!-- <span class="visually-hidden">Next</span> -->
+							</a>
+						  </div>
+						  
+					
+					
+		
+
+
+
+					</div>
+				</div>
+				
+				<div class="col-12 col-sm-12 col-md-12 col-lg-6">
+					<div>
+						<h1 class="my_prod_title">{{product.name}}</h1>
+
+						<p><h2><span class="badge rounded-pill bg-success">{{product.price}}</span>  <span class="badge rounded-pill bg-secondary"><del>{{product.cut_through_price}}</del></span></h2></p>
+						{% if product.stock <= 0 %}
+						<p class="text-justify my_prod_text"><b>Out of Stock</b></p>
+					    {% else %}
+						<div class="row">
+						<p><a class="btn btn-info btn-lg " href="{% url 'cart:add_cart' product.id %}"><i class="fas fa-shopping-cart"></i>Add to Cart</a></p>
+						
+						<form action="/" method="POST">
+							{% csrf_token %}
+							<input type="hidden" value="{{product.id}}">
+							<input type="hidden" value="{{request.user.email}}">
+							<p><a class="btn btn-success btn-lg" type="submit" href="{% url 'wish:add_wish' product.id %}"><i class="far fa-heart fa-lg"></i>Add to Wishlist</a></p>
+						</form>
+						
+						</div>
+					    {% endif %}
+						<br>
+						
+						<br>
+
+						<p class="my_title"><b>Product Details</b></p>
+						<p class="text-justify my_prod_text">{{product.description}}</p>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <br>
+	<br>
+	<div>
+		<h1 class="text-center my_title">Related Products</h1>
+		<p class="text-justify"> </p>
+	</div>
+
+    <div class="container">
+		<div class="row mx-auto">
+		{% for rel_product in related_products %}
+		<div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4">
+			<div class="card text-center" style="min-width: 18rem;">
+			<h2><span class="badge rounded-pill bg-primary float-right">Flat{{rel_product.discount}}% OFF</span></h2>
+			<a href="{{ rel_product.get_url }}"><img src="{{rel_product.image.url}}" class="d-block w-100" alt="{{ rel_product.name }}" height="400px"></a>
+			 
+			<div class="card-body">
+			    <h4>{{rel_product.name}}</h4>
+			    <p><h2><span class="badge rounded-pill bg-info">{{product.price}}</span> <span class="badge rounded-pill bg-light text-dark"><del>{{product.cut_through_price}}</del></span></h2></p>
+			    {% if product.stock <= 0 %}
+				<p class="text-justify my_prod_text"><b>Out of Stock</b></p>
+			    {% else %}
+				
+				    <p><a class="btn btn-success btn-lg" href="{% url 'cart:add_cart' rel_product.id %}"><i class="fas fa-shopping-cart"></i>Add to Cart</a></p>
+			    
+			    {% endif %}
+			</div>
+			</div>
+		</div>
+		{% endfor %}
+
+		</div>
+		
+	</div>
+
+{% include 'footer.html' %}
+{% endblock %}

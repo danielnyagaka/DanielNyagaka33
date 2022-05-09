@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block metadescription %}
+	This is the Order History page. Here are all your orders with Smart Retail Solutions.
+{% endblock %}
+
+{% block title %}
+	Order History - Smart Solutions Private Limited
+{% endblock %}
+
+{% block content %}
+	<div>
+		<div class="text-center">
+			<br>
+			<h1 class="text-center my_title">Order History</h1>
+			<br>
+			{% if order_details %} 
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Order Number</th>
+						<th>Order Date</th>
+						<th>Order Time</th>
+						<th>Total Amount</th>
+						<th>Status</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for order in order_details %}
+						<tr>
+							<td>{{ order.id }}</td>
+							<td>{{ order.created|date:"d M Y" }}</td>
+							<td>{{ order.created|time}}</td>
+							<td>₹{{ order.total }}</td>
+							<td><i class="far fa-check-circle fa-lg"></i>{{  order.status  }}</td> 
+							<td><a href="{% url 'order:order_detail' order.id %}">View order</a></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% else %}
+			<p>You have not placed any orders yet.<br>
+				<a href="{% url 'shop:allProdCat' %}" class="w-100 btn btn-lg btn-warning">Contine Shopping</a></p>
+			{% endif %}
+		</div>
+	</div>
+	<br>
+	<br>
+{% endblock %}

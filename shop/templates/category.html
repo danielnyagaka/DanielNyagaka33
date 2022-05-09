@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block metadescription %}
+	{% if category %}
+		{{ category.description|truncatewords:155 }}
+	{% else %}
+		Welcome to Smart Solutions Private Limited. The perfect place for getting groceries online.
+	{% endif %}
+{% endblock %}
+
+{% block title %}
+	{% if category %}
+		{{ category.name }} - GevengyCart
+	{% else %}
+       Smart Naturals
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<!--Breadcrumb navigation-->
+	
+    
+	{% if category %}
+		<div class="row my_row_class">
+			
+			
+		</div>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+			  <li class="breadcrumb-item my_title" aria-current="page"><a href="{% url 'shop:allProdCat' %}">Home</a></li>
+			  <li class="breadcrumb-item active my_title" aria-current="page">{{category.name}}</li>
+			  
+			</ol>
+		  </nav>
+		  
+	{% endif %}
+	    <div class="mx-auto">
+	{% if category %}
+		<img class="my_image" src="{{ category.image.url }}" alt="{{ category.name }}">
+		
+	</div>
+	<br>
+	<div>
+		<h1 class="text-center my_title">{{category.name}}</h1>
+		<p class="text-justify">{{category.description}}</p>
+	</div>
+	{% else %}
+	
+		<!--<img class="my_image my_image_padding" src="{% static 'img/h1.jpg' %}" alt="Our Products Collection" >-->
+		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+			  <div class="carousel-item active">
+				<img src="{% static 'img/h1.jpeg' %}" height="500px"  class="d-block w-100" >
+			  </div>
+			  <div class="carousel-item">
+				<img src="{% static 'img/daily.jpeg' %}" height="500px" class="d-block w-100">
+			  </div>
+			  <div class="carousel-item">
+				<img src="{% static 'img/cleansers.jpeg' %}" height="500px" class="d-block w-100">
+			  </div>
+			  <div class="carousel-item">
+				<img src="{% static 'img/spices.jpeg' %}" height="500px" class="d-block w-100">
+			  </div>
+			</div>
+			<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+			  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			  <!-- <span class="visually-hidden">Previous</span> -->
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+			  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			  <!-- <span class="visually-hidden">Next</span> -->
+			</a>
+		  </div>
+		  
+	</div>
+	<br>
+
+
+
+	<div>
+		<h1 class="text-center my_title">Our Products Collection</h1>
+		<p class="text-justify"> </p>
+	</div>
+	{% endif %}
+	<div class="container">
+		<div class="row mx-auto">
+			{% for product in products.object_list %}
+				<div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4"> 
+					<div class="card text-center" style="min-width: 18rem;"> 
+						<h2><span class="badge rounded-pill bg-primary float-right">Flat{{product.discount}}% OFF</span></h2>
+						<a href="{{ product.get_url }}"> <img class="card-img-top my_image" src="{{product.image.url}}" alt="{{product.name}}" height="400px" > </a> 
+
+
+						<div class="card-body">
+							<h4>{{ product.name }}</h4>
+							<p><h2><span class="badge rounded-pill bg-info">{{product.price}}</span> <span class="badge rounded-pill bg-light text-dark"><del>{{product.cut_through_price}}</del></span></h2></p>
+							{% if product.stock <= 0 %}
+							<p class="text-justify my_prod_text"><b>Out of Stock</b></p>
+						    {% else %}
+							<p><a class="btn btn-success" href="{% url 'cart:add_cart' product.id %}"><i class="fas fa-shopping-cart"></i>Add to Cart</a><a class="btn btn-outline-danger " type="submit" href="{% url 'wish:add_wish' product.id %}"><i class="far fa-heart fa-lg"></i></a></p>
+						
+
+						    {% endif %}
+							</div>
+					</div>
+				</div>
+			{% endfor %}
+		
+		<div class="mx-auto">
+			{% if products.paginator.num_pages > 1 %} <!-- if more than one page required only then will pagination div will show -->
+				<hr>
+				<div class="text-center">
+					{% for pg in products.paginator.page_range %}
+						<a href="?page={{pg}}" class="btn btn-dark btn-sm {% if products.number == pg %}active{% endif %}"> {{pg}} </a>
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+		<br>
+	</div>
+
+{% include 'footer.html' %}
+{% endblock %}

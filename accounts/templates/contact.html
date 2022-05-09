@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+   <center>
+          <div class="col-md-9 ftco-animate text-center">
+          	<h1 class="mb-0 bread">Contact us</h1>
+          </div>
+        </center> 
+        <div class="map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.5760775413128!2d73.84864491420315!3d18.45754717591751!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2eac85230ba47%3A0x871eddd0a8a0a108!2sSCTR&#39;S%20Pune%20Institute%20of%20Computer%20Technology!5e0!3m2!1sen!2sin!4v1621537566286!5m2!1sen!2sin"   loading="lazy" width="1350" height="450" frameborder="0" style="border:0" allowfullscreen=""></iframe>
+          </div>   
+        {% if messages %}
+
+        {% for message in messages %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong>Hey {{user.username}}!!!</strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+  
+        {% endif %}
+
+  
+
+
+    <section class="ftco-section contact-section bg-light">
+      <br>
+      <div class="container">
+        
+      	<div class="row d-flex mb-5 contact-info">
+          <div class="w-100"></div>
+
+          <div class="col-md-3 d-flex">
+          	<div class="info bg-white p-4">
+              <p><span>Address:</span>PICT,Katraj,Pune,
+              Maharashtra</p>
+	          </div>
+          </div>
+          <div class="col-md-3 d-flex">
+          	<div class="info bg-white p-4">
+	            <p><span>Phone:</span> <a href="tel://917447650728">+91 7447450728</a></p>
+	          </div>
+          </div>
+          <div class="col-md-3 d-flex">
+          	<div class="info bg-white p-4">
+	            <p><span>Email:</span> <a href="mailto:mehereanuj570@gmail.com">smartcart@gmail.com</a></p>
+	          </div>
+          </div>
+          <div class="col-md-3 d-flex">
+          	<div class="info bg-white p-4">
+	            <p><span>Website :</span> <a href="https://pict.edu" target="_blank">PICT PUNE</a></p>
+	          </div>
+          </div>
+        </div>
+        
+          <div class="col-md-12 flex">
+            <form class="bg-white p-5 contact-form" method="post">
+              {% csrf_token %}
+              
+              <div class="form-group">
+                {{ form.name }}
+              </div>
+              <br>
+              <div class="form-group">
+                {{ form.email }}
+              </div>
+              <br>
+              <div class="form-group">
+                {{ form.phone }}
+              </div>
+              <br>
+              <div class="form-group">
+                {{ form.desc }}
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+              </div>
+              
+            </form>
+            
+          </div>
+           
+          
+          
+      </div>
+    </section>
+{% endblock %}

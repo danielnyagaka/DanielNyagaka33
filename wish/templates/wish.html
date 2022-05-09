@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block metadescription %}
+	This is the shopping cart page. Proceed to review your items and place the order.
+{% endblock %}
+
+{% block title %}
+	Wishlist Smart Solutions Private Limited
+{% endblock %}
+
+{% block content %}
+<div>
+  <div class="text-center">
+    <br>
+    <h1 class="text-center my_title">Wishlist</h1>
+<main class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    {% if not wish_items %} 
+                    <h1 class="display-4">You have no items added in your wishlist</h1>
+                    <div class="text-center">
+                        <a href="{% url 'shop:allProdCat' %}"><button class="w-100 btn btn-lg btn-outline-warning">Go Home</button></a>
+                    </div>
+                    {% else %}
+                </div>
+              
+                <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                {% for wish_item in wish_items %}
+                  <div class="col">
+                    <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                      <h4 class="my-0 fw-normal">{{ wish_item.product.name }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ wish_item.product.get_url }}"><img src="{{ wish_item.product.image.url }}" alt="" class="float-left rounded custom_image" ></a>
+                      <h1 class="card-title pricing-card-title">₹{{ wish_item.product.price }}</h1>
+                      {% if wish_item.quantity < wish_item.product.stock %}
+                      <a href="{% url 'cart:add_cart' wish_item.product.id %}"><button type="button" class="w-100 btn btn-lg btn-outline-success" >Add to Cart</button></a>
+                      {% else %}
+                      <button type="button" class="w-100 btn btn-lg btn-outline-danger ">Out of Stock</button>
+                      {% endif %}
+                     <a href="{% url 'wish:full_remove' wish_item.product.id %}"> <button type="button" class="w-100 btn btn-lg btn-outline-warning">Remove from Wishlist</button></a>
+                     
+
+                    </div> 
+                  </div>
+                  </div>
+                {% endfor %}
+                </div>
+                </main>
+    {% endif %}
+            
+{% endblock %}
